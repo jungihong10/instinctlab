@@ -28,19 +28,17 @@ G1_with_shoe_CFG.spawn.asset_path = os.path.abspath(
     f"{__file_dir__}/../../urdf/g1_29dof_torsoBase_popsicle_with_shoe.urdf"
 )
 
-
 @configclass
 class AmassMotionCfg(AmassMotionCfgBase):
-    path = os.path.expanduser("~/Datasets")
+    path = os.path.expanduser("/home/jungi-hong/dataset/instinct-project-g1-parkour/hiking-in-the-wild_Data&Model/data&model")
     retargetting_func = None
-    filtered_motion_selection_filepath = os.path.expanduser("~/Datasets/parkour_motion_without_run.yaml")
+    filtered_motion_selection_filepath = os.path.expanduser("/home/jungi-hong/dataset/instinct-project-g1-parkour/hiking-in-the-wild_Data&Model/data&model/parkour_motion_without_run.yaml")
     motion_start_from_middle_range = [0.0, 0.9]
     motion_start_height_offset = 0.0
     ensure_link_below_zero_ground = False
     buffer_device = "output_device"
     motion_interpolate_func = motion_interpolate_bilinear
     velocity_estimation_method = "frontward"
-
 
 motion_reference_cfg = MotionReferenceManagerCfg(
     prim_path="{ENV_REGEX_NS}/Robot/torso_link",
