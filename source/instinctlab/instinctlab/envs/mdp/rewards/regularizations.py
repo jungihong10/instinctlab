@@ -882,3 +882,25 @@ def contact_stay_time(
     # Compute the reward
     reward = torch.sum((last_contact_time - threshold) * is_first_air, dim=-1)  # (batch_size,)
     return reward
+def action_acc_l2(
+    env: ManagerBasedRLEnv,
+    action_ids: Sequence[int] | None = None,
+) -> torch.Tensor:
+    """Second-order action smoothness (action acceleration penalty).
+    
+    Penalizes: -∑ⱼ(aⱼ,ₜ − 2aⱼ,ₜ₋₁ + aⱼ,ₜ₋₂)²
+    """
+    action = env.action_manager.action
+    if action_ids is not None:
+        action = action[:, action_ids]
+    # Compute the second-order finite difference (acceleration)
+    if not hasattr(env, "_last_action"):
+        env._last_action = torch.zeros_like(action)
+        env._last_last_action = torch.zeros_like(action)
+    action_acc = action - 2 * env._last_action + env._last_last_action
+    # Update the last actions
+    env._last_last_action[:] = env._last_action
+    env._last_action[:] = action
+    # Compute the L2 penalty
+    action_acc_l2 = torch.sum(torch.square(action_acc), dim=-1)  # (batch_size,)
+    return action_acc_l2

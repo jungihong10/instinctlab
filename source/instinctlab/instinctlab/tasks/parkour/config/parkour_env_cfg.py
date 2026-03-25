@@ -716,6 +716,7 @@ class G1Rewards:
         params={"asset_cfg": SceneEntityCfg("robot", joint_names=[".*"])},
     )
     action_rate_l2 = RewTerm(func=mdp.action_rate_l2, weight=-0.005)
+    action_acc_l2 = RewTerm(func=mdp.action_acc_l2, weight=-0.005)  # adjust weight as needed
     flat_orientation_l2 = RewTerm(func=mdp.flat_orientation_l2, weight=-3.0)
     pelvis_orientation_l2 = RewTerm(
         func=mdp.link_orientation, weight=-3.0, params={"asset_cfg": SceneEntityCfg("robot", body_names="pelvis")}
