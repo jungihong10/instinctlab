@@ -53,7 +53,7 @@ We showcase three representative parkour scenarios using the **action accelerati
 * Reduced jitter during contact transitions
 * Improved balance over multiple steps
 
-👉 [Watch Video](./videos/parkour_down_stairs.mp4)
+👉 [Watch Video](./parkour_down_stairs.mp4)
 
 ---
 
@@ -63,7 +63,7 @@ We showcase three representative parkour scenarios using the **action accelerati
 * Smooth coordination during flight phase
 * Reduced impact instability
 
-👉 [Watch Video](./videos/parkour_gap_jump.mp4)
+👉 [Watch Video](./parkour_gap_jump.mp4)
 
 ---
 
@@ -73,7 +73,7 @@ We showcase three representative parkour scenarios using the **action accelerati
 * Smooth weight transfer
 * Reliable recovery after ascent
 
-👉 [Watch Video](./videos/parkour_big_step_up.mp4)
+👉 [Watch Video](./parkour_big_step_up.mp4)
 
 ---
 
