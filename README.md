@@ -10,67 +10,70 @@ This term penalizes rapid changes in actions between timesteps, encouraging smoo
 
 ## 🎯 What’s New
 
-We added a reward component that minimizes action jerk:
+We distinguish between two types of action smoothness:
 
-* Encourages **smooth control signals**
-* Reduces **high-frequency oscillations**
-* Improves **stability during dynamic parkour movements**
+### 1️⃣ First-Order Smoothness (Velocity Penalty)
 
-Conceptually:
+Penalizes rapid changes between consecutive actions:
 
 ```
-action_acc = ||a_t - a_{t-1}||
+- ∑ⱼ (aⱼ,t − aⱼ,t−1)²
 ```
 
-This term is incorporated into the overall reward as a penalty.
+* Reduces **jerky control signals**
+* Encourages **temporal consistency**
+
+---
+
+### 2️⃣ Second-Order Smoothness (Acceleration Penalty)
+
+Penalizes changes in action differences (i.e., action acceleration):
+
+```
+- ∑ⱼ (aⱼ,t − 2aⱼ,t−1 + aⱼ,t−2)²
+```
+
+* Encourages **even smoother trajectories**
+* Reduces **high-frequency oscillations further**
+* Leads to more **physically realistic motion**
+
+---
+
+In this project, we focus on **second-order smoothness (`action_acc`)**, which provides stronger regularization for dynamic tasks like parkour.
 
 ---
 
 ## 🎥 Example Parkour Videos
 
-Below are three example rollouts demonstrating the effect of the new reward term.
+We showcase three representative parkour scenarios using the **action acceleration reward**:
 
-### 1. Baseline (No Action Acc Penalty)
+### 1. Descending Stairs
 
-* Jerky movements
-* Higher energy usage
-* Less stable landings
+* Stable foot placement while going down
+* Reduced jitter during contact transitions
+* Improved balance over multiple steps
 
-👉 [Watch Video](./videos/parkour_baseline.mp4)
-
----
-
-### 2. Moderate Action Acc Penalty
-
-* Smoother transitions
-* Improved balance
-* More controlled jumps
-
-👉 [Watch Video](./videos/parkour_action_acc_medium.mp4)
+👉 [Watch Video](./videos/parkour_down_stairs.mp4)
 
 ---
 
-### 3. Strong Action Acc Penalty
+### 2. Gap Jump (Across Empty Space)
 
-* Very smooth motions
-* Conservative but stable behavior
-* Slightly reduced agility
+* Controlled takeoff and landing
+* Smooth coordination during flight phase
+* Reduced impact instability
 
-👉 [Watch Video](./videos/parkour_action_acc_strong.mp4)
+👉 [Watch Video](./videos/parkour_gap_jump.mp4)
 
 ---
 
-## 📊 Observations
+### 3. Climbing a Large Step
 
-| Setting          | Smoothness  | Stability   | Agility   |
-| ---------------- | ----------- | ----------- | --------- |
-| Baseline         | ❌ Low       | ⚠️ Medium   | ✅ High    |
-| Moderate Penalty | ✅ Good      | ✅ High      | ✅ Good    |
-| Strong Penalty   | ✅ Very High | ✅ Very High | ⚠️ Medium |
+* Strong but stable push-off
+* Smooth weight transfer
+* Reliable recovery after ascent
 
-Key takeaway:
-
-> There is a trade-off between **smoothness** and **agility**. A moderate penalty provides the best balance.
+👉 [Watch Video](./videos/parkour_big_step_up.mp4)
 
 ---
 
